@@ -1,6 +1,7 @@
 package sample.cafekiosk.unit;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,10 +12,24 @@ import sample.cafekiosk.unit.order.Order;
 @Getter
 public class CafeKiosk {
 
+	private static final LocalTime SHOP_OPEN_TIME = LocalTime.of(10, 0);
+	private static final LocalTime SHOP_CLOSE_TIME = LocalTime.of(22, 0);
+
 	private final List<Beverage> beverages = new ArrayList<>();
 
 	public void add(Beverage beverage) {
 		beverages.add(beverage);
+	}
+
+	public void add(
+		Beverage beverage,
+		int count
+	) {
+		if (count <= 0)
+			throw new IllegalArgumentException("음료는 1잔 이상 주문하실 수 있습니다.");
+
+		for (int i = 0; i < count; i++)
+			beverages.add(beverage);
 	}
 
 	public void remove(Beverage beverage) {
@@ -30,6 +45,19 @@ public class CafeKiosk {
 	}
 
 	public Order createOrder() {
-		return new Order(LocalDateTime.now(), beverages);
+		LocalDateTime now = LocalDateTime.now();
+		LocalTime currentTime = now.toLocalTime();
+		if (currentTime.isBefore(SHOP_OPEN_TIME) || currentTime.isAfter(SHOP_CLOSE_TIME))
+			throw new IllegalArgumentException("주문 시간이 아닙니다.");
+
+		return new Order(now, beverages);
+	}
+
+	public Order createOrder(LocalDateTime localDateTime) {
+		LocalTime currentTime = localDateTime.toLocalTime();
+		if (currentTime.isBefore(SHOP_OPEN_TIME) || currentTime.isAfter(SHOP_CLOSE_TIME))
+			throw new IllegalArgumentException("주문 시간이 아닙니다.");
+
+		return new Order(localDateTime, beverages);
 	}
 }
