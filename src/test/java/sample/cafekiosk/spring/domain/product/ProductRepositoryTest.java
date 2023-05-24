@@ -9,7 +9,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
 /*
@@ -28,9 +28,19 @@ import org.springframework.test.context.ActiveProfiles;
 
 	# Presentation Layer
 		- Controller Test
+
+	---
+
+	# @DataJpaTest
+		- JPA 관련 빈만 띄운다.
+		- 트랜잭션 어노테이션 제공
+
+	# @SpringBootTest
+		- 통합 테스트
+		- 트랜잭션 어노테이션을 제공하지 않아서 전체 테스트를 돌릴 때 데이터 중복 이슈가 존재
  */
-// @DataJpaTest
-@SpringBootTest // 통합 테스트
+@DataJpaTest // 트랜잭션 어노테이션 제공
+// @SpringBootTest
 @ActiveProfiles("test")
 class ProductRepositoryTest {
 
