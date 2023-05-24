@@ -17,6 +17,17 @@ import org.springframework.test.context.ActiveProfiles;
 		- Data Access 역할
 		- 비즈니스 가공 로직이 포함되어서는 안 된다.
 		- Data에 대한 CRUD에만 집중한 레이어
+		- Repository Test
+		- 통합 테스트지만 Layer 만 떼서 테스트하는 느낌이라 단위 테스트 같기도 하다.
+
+	# Business Layer
+		- 비즈니스 로직을 구현하는 역할
+		- Persistence Layer 와의 상호작용을 통해 비즈니스 로직을 전개시킨다.
+		- 트랜잭션을 보장해야 한다.
+		- Service Test
+
+	# Presentation Layer
+		- Controller Test
  */
 // @DataJpaTest
 @SpringBootTest // 통합 테스트
@@ -55,6 +66,45 @@ class ProductRepositoryTest {
 
 		// when
 		List<Product> products = productRepository.findAllBySellingTypeIn(List.of(SELLING, HOLD));
+
+		// then
+		assertThat(products).hasSize(2)
+			.extracting("productNumber", "name", "sellingType")
+			.containsExactlyInAnyOrder(
+				tuple("001", "아메리카노", SELLING),
+				tuple("002", "카페라떼", HOLD)
+			);
+	}
+
+	@Test
+	@DisplayName("상품번호 리스트로 상품들을 조회한다.")
+	void findAllByProductNumberIn() {
+		// given
+		Product product1 = Product.builder()
+			.productNumber("001")
+			.type(HANDMADE)
+			.sellingType(SELLING)
+			.name("아메리카노")
+			.price(4000)
+			.build();
+		Product product2 = Product.builder()
+			.productNumber("002")
+			.type(HANDMADE)
+			.sellingType(HOLD)
+			.name("카페라떼")
+			.price(4500)
+			.build();
+		Product product3 = Product.builder()
+			.productNumber("003")
+			.type(HANDMADE)
+			.sellingType(STOP_SELLING)
+			.name("팥빙수")
+			.price(7000)
+			.build();
+		productRepository.saveAll(List.of(product1, product2, product3));
+
+		// when
+		List<Product> products = productRepository.findAllByProductNumberIn(List.of("001", "002"));
 
 		// then
 		assertThat(products).hasSize(2)

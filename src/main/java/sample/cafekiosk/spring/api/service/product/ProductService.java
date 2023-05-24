@@ -21,7 +21,7 @@ public class ProductService {
 		List<Product> products = productRepository.findAllBySellingTypeIn(ProductSellingType.forDisplay());
 
 		return products.stream()
-				.map(ProductResponse::of)
-				.collect(Collectors.toList());
+			.map(ProductResponse::of)
+			.collect(Collectors.toList());
 	}
 }

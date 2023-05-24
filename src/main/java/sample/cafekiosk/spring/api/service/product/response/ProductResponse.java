@@ -35,12 +35,12 @@ public class ProductResponse {
 
 	public static ProductResponse of(Product product) {
 		return ProductResponse.builder()
-				.id(product.getId())
-				.productNumber(product.getProductNumber())
-				.type(product.getType())
-				.sellingType(product.getSellingType())
-				.name(product.getName())
-				.price(product.getPrice())
-				.build();
+			.id(product.getId())
+			.productNumber(product.getProductNumber())
+			.type(product.getType())
+			.sellingType(product.getSellingType())
+			.name(product.getName())
+			.price(product.getPrice())
+			.build();
 	}
 }
