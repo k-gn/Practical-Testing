@@ -14,8 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import sample.cafekiosk.spring.api.controller.order.request.OrderCreateRequest;
 import sample.cafekiosk.spring.api.controller.order.response.OrderResponse;
+import sample.cafekiosk.spring.api.service.order.request.OrderCreateServiceRequest;
 import sample.cafekiosk.spring.domain.order.OrderProductRepository;
 import sample.cafekiosk.spring.domain.order.OrderRepository;
 import sample.cafekiosk.spring.domain.product.Product;
@@ -24,11 +24,10 @@ import sample.cafekiosk.spring.domain.product.ProductType;
 import sample.cafekiosk.spring.domain.stock.Stock;
 import sample.cafekiosk.spring.domain.stock.StockRepository;
 
-// 이렇게 달아도 전체 테스트 돌릴 때 중복 이슈를 해결할 순 있지만 부작용이 있다.
+// @Transactional 을 달아도 전체 테스트 돌릴 때 중복 이슈를 해결할 순 있지만 부작용이 있다.
 // => 비즈니스 로직에 트랜잭션 문제를 발견하지 못할 수 있음 (서비스에 트랜잭션이 있다고 판단할 수 있다)
+// => JPA 같은 경우 트랜잭션 종료 시점에 커밋 / 변경감지가 일어나기 때문에 더욱 주의해야한다.
 // => 잘 알고 사용하자.
-// @Transactional
-
 @SpringBootTest
 @ActiveProfiles("test")
 class OrderServiceTest {
@@ -65,7 +64,7 @@ class OrderServiceTest {
 		Product product3 = createProduct(HANDMADE, "003", 5000);
 		productRepository.saveAll(List.of(product1, product2, product3));
 
-		OrderCreateRequest request = OrderCreateRequest.builder()
+		OrderCreateServiceRequest request = OrderCreateServiceRequest.builder()
 			.productNumbers(List.of("001", "002"))
 			.build();
 		LocalDateTime registeredDateTime = LocalDateTime.now();
@@ -95,7 +94,7 @@ class OrderServiceTest {
 		Product product3 = createProduct(HANDMADE, "003", 5000);
 		productRepository.saveAll(List.of(product1, product2, product3));
 
-		OrderCreateRequest request = OrderCreateRequest.builder()
+		OrderCreateServiceRequest request = OrderCreateServiceRequest.builder()
 			.productNumbers(List.of("001", "001"))
 			.build();
 		LocalDateTime registeredDateTime = LocalDateTime.now();
@@ -129,7 +128,7 @@ class OrderServiceTest {
 		Stock stock2 = Stock.create("002", 2);
 		stockRepository.saveAll(List.of(stock1, stock2));
 
-		OrderCreateRequest request = OrderCreateRequest.builder()
+		OrderCreateServiceRequest request = OrderCreateServiceRequest.builder()
 			.productNumbers(List.of("001", "001", "002", "003"))
 			.build();
 		LocalDateTime registeredDateTime = LocalDateTime.now();
@@ -174,7 +173,7 @@ class OrderServiceTest {
 		stock1.deductQuantity(1); // todo
 		stockRepository.saveAll(List.of(stock1, stock2));
 
-		OrderCreateRequest request = OrderCreateRequest.builder()
+		OrderCreateServiceRequest request = OrderCreateServiceRequest.builder()
 			.productNumbers(List.of("001", "001", "002", "003"))
 			.build();
 		LocalDateTime registeredDateTime = LocalDateTime.now();

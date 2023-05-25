@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import lombok.Builder;
 import lombok.Getter;
-import sample.cafekiosk.spring.api.service.product.response.ProductResponse;
+import sample.cafekiosk.spring.api.controller.product.response.ProductResponse;
 import sample.cafekiosk.spring.domain.order.Order;
 
 @Getter

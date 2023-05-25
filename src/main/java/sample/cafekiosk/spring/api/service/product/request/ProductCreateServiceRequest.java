@@ -1,46 +1,43 @@
-package sample.cafekiosk.spring.api.service.product.response;
+package sample.cafekiosk.spring.api.service.product.request;
+
+import javax.validation.constraints.NotNull;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import sample.cafekiosk.spring.domain.product.Product;
 import sample.cafekiosk.spring.domain.product.ProductSellingType;
 import sample.cafekiosk.spring.domain.product.ProductType;
 
 @Getter
-public class ProductResponse {
+@NoArgsConstructor
+public class ProductCreateServiceRequest {
 
-	private Long id;
-	private String productNumber;
 	private ProductType type;
 	private ProductSellingType sellingType;
 	private String name;
 	private int price;
 
 	@Builder
-	private ProductResponse(
-		Long id,
-		String productNumber,
+	private ProductCreateServiceRequest(
 		ProductType type,
 		ProductSellingType sellingType,
 		String name,
 		int price
 	) {
-		this.id = id;
-		this.productNumber = productNumber;
 		this.type = type;
 		this.sellingType = sellingType;
 		this.name = name;
 		this.price = price;
 	}
 
-	public static ProductResponse of(Product product) {
-		return ProductResponse.builder()
-			.id(product.getId())
-			.productNumber(product.getProductNumber())
-			.type(product.getType())
-			.sellingType(product.getSellingType())
-			.name(product.getName())
-			.price(product.getPrice())
+	public Product toEntity(String nextProductNumber) {
+		return Product.builder()
+			.productNumber(nextProductNumber)
+			.type(type)
+			.sellingType(sellingType)
+			.name(name)
+			.price(price)
 			.build();
 	}
 }

@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
-import sample.cafekiosk.spring.api.controller.order.request.OrderCreateRequest;
 import sample.cafekiosk.spring.api.controller.order.response.OrderResponse;
+import sample.cafekiosk.spring.api.service.order.request.OrderCreateServiceRequest;
 import sample.cafekiosk.spring.domain.order.Order;
 import sample.cafekiosk.spring.domain.order.OrderRepository;
 import sample.cafekiosk.spring.domain.product.Product;
@@ -30,7 +30,7 @@ public class OrderService {
 
 	@Transactional
 	public OrderResponse createOrder(
-		OrderCreateRequest request,
+		OrderCreateServiceRequest request,
 		LocalDateTime registeredDateTime
 	) {
 		List<String> productNumbers = request.getProductNumbers();

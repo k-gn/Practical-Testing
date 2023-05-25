@@ -2,7 +2,6 @@ package sample.cafekiosk.spring;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 /*
 	- 단위 테스트도 중요하지만 A 기능과 B 기능이 합쳐 동작되었을 때 잘 동작되는지 커버하기 힘들다.
@@ -12,7 +11,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 	- 풍부한 단위 테스트 + 큰 기능 단위를 검증하는 통합테스트
  */
 @SpringBootApplication
-@EnableJpaAuditing
 public class CafeKioskApplication {
 
 	public static void main(String[] args) {
