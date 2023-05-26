@@ -44,10 +44,11 @@ public class Order extends BaseEntity {
 
 	@Builder
 	private Order(
-		List<Product> products,
-		LocalDateTime registeredDateTime
+		OrderStatus orderStatus,
+		LocalDateTime registeredDateTime,
+		List<Product> products
 	) {
-		this.orderStatus = OrderStatus.INIT;
+		this.orderStatus = orderStatus;
 		this.totalPrice = calculateTotalPrice(products);
 		this.registeredDateTime = registeredDateTime;
 
@@ -67,6 +68,7 @@ public class Order extends BaseEntity {
 		LocalDateTime registeredDateTime
 	) {
 		return Order.builder()
+			.orderStatus(OrderStatus.INIT)
 			.products(products)
 			.registeredDateTime(registeredDateTime)
 			.build();
