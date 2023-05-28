@@ -28,6 +28,7 @@ class MailServiceTest {
 	@InjectMocks
 	private MailService mailService;
 
+	// 한 테스트는 하나의 주제!
 	@Test
 	@DisplayName("메일 전송 테스트")
 	void sendMail() {

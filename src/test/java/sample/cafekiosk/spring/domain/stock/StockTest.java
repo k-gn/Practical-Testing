@@ -1,13 +1,14 @@
 package sample.cafekiosk.spring.domain.stock;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class StockTest {
 
+	// 테스트 코드 안에 논리구조가 있다는 것은 두가지 이상의 내용을 포함하고 있다는 반증
+	// 무슨 테스트인지 방해할 수 있다.
 	@Test
 	@DisplayName("재고의 수량이 제공된 수량보다 작은지 확인한다.")
 	void isQuantityLessThan() {
