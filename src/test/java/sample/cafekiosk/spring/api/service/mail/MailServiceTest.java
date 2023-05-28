@@ -1,7 +1,7 @@
 package sample.cafekiosk.spring.api.service.mail;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.BDDMockito.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -40,6 +40,10 @@ class MailServiceTest {
 		when(mailSendClient.sendEmail(anyString(), anyString(), anyString(), anyString()))
 			.thenReturn(true);
 
+		// BDD Style
+		given(mailSendClient.sendEmail(anyString(), anyString(), anyString(), anyString()))
+			.willReturn(true);
+
 		// when
 		boolean result = mailService.sendMail("", "", "", "");
 
@@ -50,3 +54,11 @@ class MailServiceTest {
 		verify(mailSendHistoryRepository, times(1)).save(any(MailSendHistory.class));
 	}
 }
+
+/*
+	- mocking 은 꼭 필요한 경우에만 사용하고, 최대한 실제 객체를 사용하여 테스트하자.
+	- 런타임 시점에 일어날 일을 정확하게 stubbing 했다고 단언할 수 있는지?
+	- 서로 다른 모듈이 연합했을 때 어떤 이슈가 발생할 지 모른다.
+
+	- 우리 시스템 외부 시스템과 연계될 때 mocking 을 주로 사용한다.
+ */
