@@ -168,9 +168,15 @@ class OrderServiceTest {
 		Product product3 = createProduct(HANDMADE, "003", 5000);
 		productRepository.saveAll(List.of(product1, product2, product3));
 
-		Stock stock1 = Stock.create("001", 2);
+		Stock stock1 = Stock.create("001", 1);
 		Stock stock2 = Stock.create("002", 2);
-		stock1.deductQuantity(1); // todo
+		/*
+			todo : 테스트의 관심사에서 벗어나기 때문에 재고차감이란 다른 행위를 끌어다 쓰는 것은 지양하자.
+				   복잡한 테스트인 경우 이러한 코드때문에 테스트가 깨질 수 있고, 유추하기도 어려워 진다.
+				   맥락을 이해하는데 있어서 허들이 하나 생긴 것이다. -> 테스트 환경의 독립성을 보장하자.
+				   테스트 환경 구성 시 순수한 빌더나 생성자 기반으로 객체를 만들어 처리하는 것이 좋다.
+		 */
+		// stock1.deductQuantity(1);
 		stockRepository.saveAll(List.of(stock1, stock2));
 
 		OrderCreateServiceRequest request = OrderCreateServiceRequest.builder()
