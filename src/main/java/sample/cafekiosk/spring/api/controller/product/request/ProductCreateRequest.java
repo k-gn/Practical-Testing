@@ -30,6 +30,11 @@ public class ProductCreateRequest {
 	@Positive(message = "상품 가격은 양수여야 합니다.")
 	private int price;
 
+	/*
+		# 테스트에서만 필요한 메서드가 생겼는데 프로덕션 코드에선 필요가 없다면?
+			- 만들어도 되긴 하지만 무분별하게 만들지 말자.
+			- 마땅히 가져도 되는 성격의 행위라면 괜찮다.
+	 */
 	@Builder
 	private ProductCreateRequest(
 		ProductType type,

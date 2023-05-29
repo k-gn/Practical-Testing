@@ -26,6 +26,7 @@ import sample.cafekiosk.spring.domain.product.ProductRepository;
 public class ProductService {
 
 	private final ProductRepository productRepository;
+	private final ProductNumberFactory productNumberFactory;
 
 	public List<ProductResponse> getSellingProducts() {
 		List<Product> products = productRepository.findAllBySellingTypeIn(forDisplay());
@@ -42,21 +43,11 @@ public class ProductService {
 				- 유니크 조건 및 재시도 로직
 				- 증가값이 아닌 UUID 같은 정책을 활용한 고유값 활용
 		 */
-		String nextProductNumber = createNextProductNumber();
+		String nextProductNumber = productNumberFactory.createNextProductNumber();
 
 		Product product = request.toEntity(nextProductNumber);
 		Product savedProduct = productRepository.save(product);
 
 		return ProductResponse.of(savedProduct);
-	}
-
-	private String createNextProductNumber() {
-		String latestProductNumber = productRepository.findLatestProductNumber();
-		if (latestProductNumber == null)
-			return "001";
-
-		int latestProductNumberInt = Integer.parseInt(latestProductNumber);
-		int nextProductNumberInt = latestProductNumberInt + 1;
-		return String.format("%03d", nextProductNumberInt);
 	}
 }
