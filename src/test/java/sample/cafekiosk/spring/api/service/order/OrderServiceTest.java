@@ -27,7 +27,8 @@ import sample.cafekiosk.spring.domain.stock.StockRepository;
 // @Transactional 을 달아도 전체 테스트 돌릴 때 중복 이슈를 해결할 순 있지만 부작용이 있다.
 // => 비즈니스 로직에 트랜잭션 문제를 발견하지 못할 수 있음 (서비스에 트랜잭션이 있다고 판단할 수 있다)
 // => JPA 같은 경우 트랜잭션 종료 시점에 커밋 / 변경감지가 일어나기 때문에 더욱 주의해야한다.
-// => 잘 알고 사용하자.
+// => 스프링 배치 통합 테스트 같은 경우 여러 트랜잭션 경계가 있기 때문에 사용하기 어렵다.
+// => 이러한 사이드 이펙트를 잘 알고 사용하면 상관 없다.
 @SpringBootTest
 @ActiveProfiles("test")
 class OrderServiceTest {
@@ -49,6 +50,7 @@ class OrderServiceTest {
 
 	@AfterEach
 	void tearDown() {
+		// deleteAllInBatch 는 순서를 잘 고려해야 한다 (외래키 조건으로 인해 안 지워질 수 있다.)
 		orderProductRepository.deleteAllInBatch();
 		stockRepository.deleteAllInBatch();
 		productRepository.deleteAllInBatch();
