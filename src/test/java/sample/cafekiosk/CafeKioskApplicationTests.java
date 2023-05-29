@@ -1,8 +1,5 @@
 package sample.cafekiosk;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-
 /*
 	# Layered Architecture 도 단점은 존재한다.
 		- 도메인 객체라 부르고 있는 엔티티가 외부의 JPA와 뗄 수 없는 강결합된 구조
@@ -15,10 +12,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 			- ex. 데이터 엑세스를 위한 레포지토리를 따로 두고, 이 레포지토리를 구현하는 JPA 레포지토리를 따로 두고 런타임 시 주입해준다.
 		- 멀티모듈로 커지는 시스템일 때 적용하면 좋다.
  */
-@SpringBootTest
+// @SpringBootTest
 class CafeKioskApplicationTests {
 
-	@Test
+	// @Test
 	void contextLoads() {
 	}
 

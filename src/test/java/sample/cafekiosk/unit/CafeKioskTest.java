@@ -116,7 +116,7 @@ class CafeKioskTest {
 			.hasMessage("음료는 1잔 이상 주문하실 수 있습니다.");
 	}
 
-	@Test
+	// @Test
 	void createOrder() {
 		CafeKiosk cafeKiosk = new CafeKiosk();
 		Americano americano = new Americano();

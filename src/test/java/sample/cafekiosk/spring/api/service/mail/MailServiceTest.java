@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import sample.cafekiosk.spring.client.mail.MailSendClient;
@@ -19,7 +18,8 @@ import sample.cafekiosk.spring.domain.history.mail.MailSendHistoryRepository;
 @ExtendWith(MockitoExtension.class) // mockito 사용을 인지
 class MailServiceTest {
 
-	@Spy // 일부만 stubbing 하고 싶고, 일부는 실제 객체 기능을 실행 / 잘 안씀 (when X / do O)
+	// @Spy // 일부만 stubbing 하고 싶고, 일부는 실제 객체 기능을 실행 / 잘 안씀 (when X / do O)
+	@Mock
 	private MailSendClient mailSendClient;
 
 	@Mock
@@ -38,8 +38,8 @@ class MailServiceTest {
 		// MailService mailService = new MailService(mailSendClient, mailSendHistoryRepository);
 
 		// 행위를 지정하지 않을 경우(no stubbing) 결과로 기본값을 리턴한다.
-		when(mailSendClient.sendEmail(anyString(), anyString(), anyString(), anyString()))
-			.thenReturn(true);
+		// when(mailSendClient.sendEmail(anyString(), anyString(), anyString(), anyString()))
+		// 	.thenReturn(true);
 
 		// BDD Style
 		given(mailSendClient.sendEmail(anyString(), anyString(), anyString(), anyString()))

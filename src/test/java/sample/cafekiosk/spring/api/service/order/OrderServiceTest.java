@@ -11,9 +11,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
+import sample.cafekiosk.spring.IntegrationTestSupport;
 import sample.cafekiosk.spring.api.controller.order.response.OrderResponse;
 import sample.cafekiosk.spring.api.service.order.request.OrderCreateServiceRequest;
 import sample.cafekiosk.spring.domain.order.OrderProductRepository;
@@ -29,9 +28,7 @@ import sample.cafekiosk.spring.domain.stock.StockRepository;
 // => JPA 같은 경우 트랜잭션 종료 시점에 커밋 / 변경감지가 일어나기 때문에 더욱 주의해야한다.
 // => 스프링 배치 통합 테스트 같은 경우 여러 트랜잭션 경계가 있기 때문에 사용하기 어렵다.
 // => 이러한 사이드 이펙트를 잘 알고 사용하면 상관 없다.
-@SpringBootTest
-@ActiveProfiles("test")
-class OrderServiceTest {
+class OrderServiceTest extends IntegrationTestSupport {
 
 	@Autowired
 	private ProductRepository productRepository;

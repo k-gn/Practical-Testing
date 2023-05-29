@@ -77,7 +77,7 @@ class ProductTypeTest {
 		boolean expected
 	) {
 		// given
-		
+
 		// when
 		boolean result = ProductType.containsStockType(productType);
 
